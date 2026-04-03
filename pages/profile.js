@@ -125,7 +125,7 @@ window.renderProfile = function() {
   });
 
   document.getElementById('logout-btn').addEventListener('click', () => {
-    if (confirm(I18n.currentLang === 'th' ? 'ต้องการออกจากระบบ?' : 'Log out of The Sanctuary?')) {
+    if (confirm(I18n.currentLang === 'th' ? 'ต้องการออกจากระบบ?' : 'Log out of BuDi?')) {
       App.showToast(I18n.currentLang === 'th' ? 'ออกจากระบบแล้ว 👋' : 'Logged out! 👋');
       setTimeout(() => App.navigate('home'), 800);
     }

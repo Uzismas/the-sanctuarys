@@ -12,7 +12,7 @@ window.AIService = (function() {
     const lang = I18n.currentLang;
     const systemInstruction = {
       parts: [{
-        text: `You are "Sanctuary Assistant", a professional Agricultural Expert, Botanist, and Master Gardener.
+        text: `You are "BuDi Assistant", a professional Agricultural Expert, Botanist, and Master Gardener.
                Current Language: ${lang === 'th' ? 'Thai (ภาษาไทย)' : 'English'}.
                Respond to the user in ${lang === 'th' ? 'Thai' : 'English'} only.
 

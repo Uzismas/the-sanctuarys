@@ -6,7 +6,7 @@ window.I18n = {
 
   translations: {
     en: {
-      appName: 'The Sanctuary',
+      appName: 'BuDi',
       navHome: 'Home', navPlants: 'Plants', navChat: 'Chat', navTasks: 'Calendar', navProfile: 'Profile',
       greeting: 'Hello', greetingSub: 'Your greenhouse is thriving today.',
       aiInsightTitle: 'Weekly Growth Summary',
@@ -50,8 +50,8 @@ window.I18n = {
       viewGrowthLog: 'View Growth Log',
       photoCount: 'photos',
       noActivity: 'No activity yet this week.',
-      chatTitle: 'Sanctuary Assistant',
-      chatWelcome: 'Hello! I\'m your Sanctuary AI assistant. Ask me anything about your plants or gardening tips!',
+      chatTitle: 'BuDi Assistant',
+      chatWelcome: 'Hello! I\'m BuDi, your AI agricultural assistant. Ask me anything about your plants or gardening tips!',
       chatPlaceholder: 'Message leaf assistant...',
       chatSend: 'Send',
       chatThinking: 'Thinking...',
@@ -101,7 +101,7 @@ window.I18n = {
       viewGrowthLog: 'ดูประวัติการเติบโต',
       photoCount: 'รูป',
       noActivity: 'ยังไม่มีกิจกรรมสัปดาห์นี้',
-      chatTitle: 'ผู้ช่วย Sanctuary',
+      chatTitle: 'ผู้ช่วย BuDi',
       chatWelcome: 'สวัสดีค่ะ! ฉันคือ AI ผู้ช่วยใบไม้ของคุณ มีอะไรให้ช่วยเกี่ยวกับการดูแลต้นไม้ไหมคะ?',
       chatPlaceholder: 'พิมพ์ข้อความถาม AI...',
       chatSend: 'ส่ง',
