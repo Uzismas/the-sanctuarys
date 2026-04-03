@@ -161,6 +161,11 @@ window.AppData = {
   // Activity log for dashboard
   activityLog: [],
 
+  // Chat History
+  chatHistory: [
+    { role: 'ai', text: 'chatWelcome', time: new Date().toISOString() }
+  ],
+
   // AI demo responses
   aiResponses: {
     default: {

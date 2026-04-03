@@ -51,7 +51,7 @@ window.App = (function() {
 
     // Hash routing
     const hash = location.hash.replace('#', '');
-    const validPages = ['home', 'plants', 'tasks', 'camera', 'profile'];
+    const validPages = ['home', 'plants', 'chat', 'tasks', 'camera', 'profile'];
     navigate(validPages.includes(hash) ? hash : 'home');
 
     window.addEventListener('hashchange', () => {
@@ -86,6 +86,7 @@ window.App = (function() {
     switch (page) {
       case 'home':    renderHome();    break;
       case 'plants':  renderPlants();  break;
+      case 'chat':    renderChat();    break;
       case 'tasks':   renderTasks();   break;
       case 'camera':  renderCamera();  break;
       case 'profile': renderProfile(); break;

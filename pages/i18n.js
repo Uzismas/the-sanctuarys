@@ -7,7 +7,7 @@ window.I18n = {
   translations: {
     en: {
       appName: 'The Sanctuary',
-      navHome: 'Home', navPlants: 'Plants', navTasks: 'Calendar', navProfile: 'Profile',
+      navHome: 'Home', navPlants: 'Plants', navChat: 'Chat', navTasks: 'Calendar', navProfile: 'Profile',
       greeting: 'Hello', greetingSub: 'Your greenhouse is thriving today.',
       aiInsightTitle: 'Weekly Growth Summary',
       aiInsightText: 'Your Monstera has shown 15% more foliage density this week. Increased humidity levels are accelerating photosynthesis. Keep up the consistent watering!',
@@ -50,10 +50,15 @@ window.I18n = {
       viewGrowthLog: 'View Growth Log',
       photoCount: 'photos',
       noActivity: 'No activity yet this week.',
+      chatTitle: 'Sanctuary Assistant',
+      chatWelcome: 'Hello! I\'m your Sanctuary AI assistant. Ask me anything about your plants or gardening tips!',
+      chatPlaceholder: 'Message leaf assistant...',
+      chatSend: 'Send',
+      chatThinking: 'Thinking...',
     },
     th: {
       appName: 'เดอะ แซงคชวรี่',
-      navHome: 'หน้าหลัก', navPlants: 'ต้นไม้', navTasks: 'ปฏิทิน', navProfile: 'โปรไฟล์',
+      navHome: 'หน้าหลัก', navPlants: 'ต้นไม้', navChat: 'แชท', navTasks: 'ปฏิทิน', navProfile: 'โปรไฟล์',
       greeting: 'สวัสดี', greetingSub: 'สวนของคุณเขียวขจีวันนี้',
       aiInsightTitle: 'สรุปการเติบโตรายสัปดาห์',
       aiInsightText: 'มอนสเตอร่าของคุณมีใบหนาแน่นขึ้น 15% ในสัปดาห์นี้ ความชื้นที่เพิ่มขึ้นช่วยเร่งการสังเคราะห์แสง รักษาตารางการรดน้ำให้สม่ำเสมอ!',
@@ -96,6 +101,11 @@ window.I18n = {
       viewGrowthLog: 'ดูประวัติการเติบโต',
       photoCount: 'รูป',
       noActivity: 'ยังไม่มีกิจกรรมสัปดาห์นี้',
+      chatTitle: 'ผู้ช่วย Sanctuary',
+      chatWelcome: 'สวัสดีค่ะ! ฉันคือ AI ผู้ช่วยใบไม้ของคุณ มีอะไรให้ช่วยเกี่ยวกับการดูแลต้นไม้ไหมคะ?',
+      chatPlaceholder: 'พิมพ์ข้อความถาม AI...',
+      chatSend: 'ส่ง',
+      chatThinking: 'กำลังประมวลผล...',
     },
   },
 
