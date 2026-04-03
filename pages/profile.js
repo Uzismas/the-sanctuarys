@@ -101,7 +101,7 @@ window.renderProfile = function() {
         ${t('logout')}
       </button>
 
-      <!-- App Version -->
+      <!-- App Version - Updated -->
       <p style="text-align:center; font-size:0.75rem; color:var(--outline); margin-bottom:1rem;">
         ทำโดยทีม : DragonlawX
       </p>
