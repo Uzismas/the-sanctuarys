@@ -2,7 +2,7 @@
    AI SERVICE – Gemini API Integration
    ========================================== */
 window.AIService = (function() {
-  const API_KEY = 'AIzaSyACRed10cuHf6V2cYK8MHy_wb6ZkSR8IgQ';
+  const API_KEY = 'AIzaSyBDwHUNfyW_f09sEiP71qgKwG8dCO1YMuw';
   const MODEL = 'gemini-flash-latest';
 
   /**
