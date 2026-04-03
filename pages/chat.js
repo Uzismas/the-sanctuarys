@@ -104,9 +104,9 @@ function sendMessage(text) {
   list.scrollTop = list.scrollHeight;
 
   // Process response
-  setTimeout(() => {
+  (async () => {
+    const response = await AIService.getChatResponse(AppData.chatHistory.slice(0, -1), text);
     thinkingRow.remove();
-    const response = generateAIResponse(text);
     AppData.chatHistory.push({
       role: 'ai',
       text: response,
@@ -115,46 +115,7 @@ function sendMessage(text) {
     updateMessageList();
     input.disabled = false;
     input.focus();
-  }, 1500 + Math.random() * 1000);
-}
-
-function generateAIResponse(input) {
-  const t = I18n.t.bind(I18n);
-  const lang = I18n.currentLang;
-  const q = input.toLowerCase();
-
-  // Simple keyword matching for demo
-  if (q.includes('hello') || q.includes('hi') || q.includes('สวัสดี')) {
-    return lang === 'th' ? 'สวัสดีค่ะ! วันนี้สวนของคุณเป็นอย่างไรบ้างคะ?' : 'Hello! How is your garden doing today?';
-  }
-
-  // Check if user mentions one of their plants
-  const plant = AppData.plants.find(p => q.includes(p.name.toLowerCase()));
-  if (plant) {
-    const status = plant.status === 'healthy' 
-      ? (lang === 'th' ? 'ดูแข็งแรงดีมากเลยค่ะ' : 'looks very healthy!')
-      : (lang === 'th' ? 'กำลังต้องการการดูแลเป็นพิเศษอยู่นะคะ' : 'needs some extra attention right now.');
-    
-    return lang === 'th' 
-      ? `ต้น ${plant.name} ของคุณ${status} ล่าสุดมีระดับความก้าวหน้าอยู่ที่ ${plant.progress}% ค่ะ` 
-      : `Your ${plant.name} ${status} It's currently at ${plant.progress}% growth progress.`;
-  }
-
-  if (q.includes('water') || q.includes('รดน้ำ')) {
-    return lang === 'th' 
-      ? 'การรดน้ำควรเช็คหน้าดินก่อนนะคะ ถ้าดินแห้งลึกประมาณ 1-2 นิ้วค่อยรดค่ะ' 
-      : 'Always check the top inch of soil before watering. If it feels dry, it\'s time for a drink!';
-  }
-
-  if (q.includes('light') || q.includes('แดด') || q.includes('แสง')) {
-    return lang === 'th'
-      ? 'ต้นไม้ส่วนใหญ่ชอบแสงสว่างแต่ไม่ชอบแดดจัดโดยตรงค่ะ ลองวางใกล้หน้าต่างที่มีม่านกรองแสงนะคะ'
-      : 'Most houseplants love bright, indirect light. Placing them near a sheer-curtained window is usually perfect!';
-  }
-
-  return lang === 'th'
-    ? 'ฉันเข้าใจที่คุณถามนะคะ แต่ข้อมูลเรื่องนี้กำลังเรียนรู้เพิ่มเติมอยู่ค่ะ แต่เบื้องต้นลองตรวจสอบความชื้นของดินดูได้นะคะ 🌱'
-    : 'That\'s a great question! I\'m still learning about that specific topic, but remember that consistent care and observation are key to a happy plant! 🌱';
+  })();
 }
 
 function formatTime(iso) {

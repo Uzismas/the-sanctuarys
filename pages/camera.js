@@ -300,7 +300,9 @@ function showCameraFallback() {
 
 // ── AI Analysis ────────────────────────────────────────────
 let lastAIResult = '';
-function runAIAnalysis(imageData) {
+let lastAIObject = null;
+
+async function runAIAnalysis(imageData) {
   const resultDiv = document.getElementById('ai-analysis-result');
   const resultText = document.getElementById('ai-result-text');
   const aiSpin = document.getElementById('ai-spin');
@@ -310,42 +312,48 @@ function runAIAnalysis(imageData) {
   resultText.textContent = I18n.t('aiAnalyzing');
   if (aiSpin) aiSpin.style.display = 'block';
 
-  const isLog = cameraMode === 'log';
-  const targetPlant = isLog ? AppData.plants.find(p => p.id === logTargetPlantId) : null;
   const lang = I18n.currentLang;
-
-  const responses_en = [
-    'Plant looks healthy with vibrant green foliage (94% confidence – Monstera Deliciosa). Consider misting every 2–3 days to boost humidity.',
-    'Identified as Tomato (89% confidence). Fruiting progressing well. Increase watering and apply potassium-rich fertilizer.',
-    'Snake Plant detected (97% confidence). Very healthy specimen! Let soil dry completely before next watering.',
-    'Jade Plant identified (91% confidence). Compact growth observed. Ensure dry periods between waterings.',
-    'Appears to be a tropical herb (78% confidence). Looking fresh! Pinch off flower buds to encourage bushier growth.',
-  ];
-  const responses_th = [
-    'ต้นไม้ดูสุขภาพดี ใบเขียวสด (ความมั่นใจ 94% – มอนสเตอร่า) ลองฉีดพ่นน้ำทุก 2–3 วัน',
-    'ระบุว่าเป็นมะเขือเทศ (89%) การออกผลดำเนินไปดี เพิ่มการรดน้ำและใส่ปุ๋ยที่มีโพแทสเซียม',
-    'พบต้นสาวน้อยประแป้ง (97%) สุขภาพดีมาก! ปล่อยให้ดินแห้งสนิทก่อนรดน้ำครั้งต่อไป',
-    'พบต้นสาวน้อยประแป้ง (91%) การเจริญเติบโตกะทัดรัด ต้องการช่วงพักระหว่างการรดน้ำ',
-    'ดูเหมือนจะเป็นสมุนไพรเขตร้อน (78%) สดชื่นดี! เด็ดช่อดอกเพื่อให้ต้นพุ่มขึ้น',
-  ];
-
-  const responses = lang === 'th' ? responses_th : responses_en;
-
-  setTimeout(() => {
-    lastAIResult = responses[Math.floor(Math.random() * responses.length)];
-    if (resultText) resultText.textContent = '🤖 ' + lastAIResult;
+  
+  try {
+    const aiResult = await AIService.analyzePlantImage(imageData);
     if (aiSpin) aiSpin.style.display = 'none';
 
-    // If this is a log, show height comparison
+    if (aiResult) {
+      lastAIObject = aiResult;
+      lastAIResult = `${aiResult.health} (${aiResult.confidence} - ${aiResult.latin}). ${aiResult.care}`;
+      resultText.textContent = '🤖 ' + lastAIResult;
+
+      // Auto-fill form if in 'new' mode and user hasn't typed anything
+      if (cameraMode === 'new') {
+        const nameInput = document.getElementById('plant-name-input');
+        const notesInput = document.getElementById('plant-notes');
+        if (nameInput && !nameInput.value.trim()) {
+          nameInput.value = aiResult.name;
+        }
+        if (notesInput && !notesInput.value.trim()) {
+          notesInput.value = aiResult.tips;
+        }
+      }
+    } else {
+      resultText.textContent = lang === 'th' ? '❌ ไม่สามารถระบุต้นไม้ได้ ลองถ่ายรูปให้ชัดขึ้นนะคะ' : '❌ Could not identify the plant. Try a clearer photo.';
+    }
+
+    // If this is a log, show transition comparison
+    const isLog = cameraMode === 'log';
+    const targetPlant = isLog ? AppData.plants.find(p => p.id === logTargetPlantId) : null;
     if (targetPlant && targetPlant.logs.length > 0) {
       const lastLog = targetPlant.logs[targetPlant.logs.length - 1];
       const daysSince = Math.round((Date.now() - new Date(lastLog.date).getTime()) / 86400000);
       const comparison = lang === 'th'
         ? `\n📅 บันทึกล่าสุดเมื่อ ${daysSince} วันที่แล้ว`
         : `\n📅 Last logged ${daysSince} day${daysSince !== 1 ? 's' : ''} ago`;
-      resultText.textContent += comparison;
+      resultText.innerHTML += `<div style="margin-top:0.4rem; font-size:0.75rem; opacity:0.7;">${comparison}</div>`;
     }
-  }, 1600);
+  } catch (err) {
+    console.error('Vision logic error:', err);
+    if (aiSpin) aiSpin.style.display = 'none';
+    resultText.textContent = '❌ Error analysis';
+  }
 }
 
 function hideAIResult() {
@@ -410,26 +418,32 @@ function saveNewPlant() {
   const newPlant = {
     id: 'user_' + Date.now(),
     name,
-    latin: lang === 'th' ? 'ต้นไม้ของฉัน' : 'My Plant',
-    category: 'indoor',
+    latin: lastAIObject ? lastAIObject.latin : (lang === 'th' ? 'ต้นไม้ของฉัน' : 'My Plant'),
+    category: lastAIObject ? 'indoor' : 'indoor', // Simple assumption or derive from AI
     stage: 'growing',
     stageEN: 'Growing',
     stageTH: 'กำลังเติบโต',
-    status: 'healthy',
+    status: lastAIObject ? lastAIObject.status : 'healthy',
     progress: 10,
     nextTask: { en: 'Take next photo in 1 day', th: 'ถ่ายรูปครั้งต่อไปใน 1 วัน' },
     nextTaskIcon: 'photo_camera',
     difficulty: 'easy',
     difficultyLabel: { en: 'Easy', th: 'ง่าย' },
-    image: capturedImageData || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHju4PMuUIFsn8RmDhftaOhd-CQPmnGsGV6Fjf86sPHhI_qtpiCJnpwkYfSWYNZtxgBP4Q0RskK04wtj0ZXCxrfG6mglBb1s_kRfkoaNSt02Ei1TqJsGH5Q-2e_pgjrcsdVjn8pRkR9mLzN-M33jQt1S3eCeKx73T02_wh0dYcpmR9bxOCqdIjbuUGqELc2NLfT3OddXwHTDWjLviaWb7uTGXI5tttmPdNlfnMaqZRLSod-8_DtZjSyrA-6ESeKMnEgF5qjtyRIAM',
+    image: capturedImageData || 'https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&q=80',
     icons: ['eco', 'water_drop', 'thermostat'],
     care: {
-      light: { en: 'Moderate', th: 'แสงปานกลาง' },
+      light: { 
+        en: lastAIObject ? lastAIObject.care.split('.')[0] : 'Moderate', 
+        th: lastAIObject ? lastAIObject.care.split('.')[0] : 'แสงปานกลาง' 
+      },
       water: { en: 'As needed', th: 'ตามต้องการ' },
       temp: '15–30°C',
       humidity: '40–60%',
     },
-    description: { en: notes || 'User-added plant.', th: notes || 'ต้นไม้ที่เพิ่มโดยผู้ใช้' },
+    description: { 
+      en: (lastAIObject ? lastAIObject.care : notes) || 'User-added plant via AI.', 
+      th: (lastAIObject ? lastAIObject.care : notes) || 'ต้นไม้ที่เพิ่มโดยผู้ใช้ผ่าน AI' 
+    },
     userAdded: true,
     logs: [],
   };

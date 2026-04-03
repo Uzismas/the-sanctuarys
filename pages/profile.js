@@ -103,7 +103,7 @@ window.renderProfile = function() {
 
       <!-- App Version -->
       <p style="text-align:center; font-size:0.75rem; color:var(--outline); margin-bottom:1rem;">
-        The Sanctuary v1.0 · Built with 🌿
+        ทำโดยทีม : DragonlawX
       </p>
 
     </div>
