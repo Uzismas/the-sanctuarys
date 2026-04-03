@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sanctuary – Plant Care</title>
+  <meta name="description" content="Track your plants, get AI insights, and build your own sanctuary garden." />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-surface text-on-surface">
+
+  <!-- ===== TOP APP BAR ===== -->
+  <header id="top-bar" class="top-bar">
+    <div class="top-bar-left">
+      <div class="avatar-wrap">
+        <img id="header-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiQuamNCPMA6rj39ymFa-m41H6Ln-iFf31Ysdbp9qmNlykhbuHMraNaoILlc5vM6AwXKe_ELCOHmTq4keX7DQ2foOcOp5wPT7hpsHY4p6oC0T5CSrqrLQ2QKrl8eNgQ3N8JbzjDb0VGDMVTfj2fNOj_CsvTFH23EydoRfM93bomiSUjW9wuYz09UhyfnmamZklWTxe1UEezGIbmbyWb3HxQLNAplIJAO4gr01VQzTNkh7Irvt9fO_o-sz5t6U34TBMwYHbuScjXMc" alt="User avatar" />
+      </div>
+      <span class="app-title" data-i18n="appName">The Sanctuary</span>
+    </div>
+    <div class="top-bar-right">
+      <button id="lang-toggle" class="lang-btn" title="Switch Language">TH/EN</button>
+      <button id="dark-toggle" class="icon-btn" title="Toggle Dark Mode">
+        <span class="material-symbols-outlined" id="dark-icon">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== PAGE CONTAINER ===== -->
+  <main id="page-container" class="page-container"></main>
+
+  <!-- ===== FLOATING ACTION BUTTON ===== -->
+  <button id="fab" class="fab sunset-gradient" title="Add Plant">
+    <span class="material-symbols-outlined" id="fab-icon">add</span>
+  </button>
+
+  <!-- ===== BOTTOM NAV BAR ===== -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="home" id="nav-home">
+      <span class="material-symbols-outlined nav-icon">home</span>
+      <span class="nav-label" data-i18n="navHome">Home</span>
+    </button>
+    <button class="nav-item" data-page="plants" id="nav-plants">
+      <span class="material-symbols-outlined nav-icon">potted_plant</span>
+      <span class="nav-label" data-i18n="navPlants">Plants</span>
+    </button>
+    <button class="nav-item" data-page="tasks" id="nav-tasks">
+      <span class="material-symbols-outlined nav-icon">checklist</span>
+      <span class="nav-label" data-i18n="navTasks">Tasks</span>
+    </button>
+    <button class="nav-item" data-page="profile" id="nav-profile">
+      <span class="material-symbols-outlined nav-icon">person</span>
+      <span class="nav-label" data-i18n="navProfile">Profile</span>
+    </button>
+  </nav>
+
+  <!-- ===== AI MODAL ===== -->
+  <div id="ai-modal" class="modal-backdrop hidden">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <span class="material-symbols-outlined text-primary">psychology</span>
+        <h2 class="modal-title" data-i18n="aiAnalysis">AI Plant Analysis</h2>
+        <button id="ai-modal-close" class="icon-btn"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div id="ai-modal-body" class="modal-body">
+        <div class="ai-loading">
+          <div class="ai-spinner"></div>
+          <p data-i18n="aiAnalyzing">Analyzing your plant…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADD PLANT MODAL (Camera / Upload) ===== -->
+  <div id="camera-modal" class="modal-backdrop hidden">
+    <div class="modal-sheet modal-sheet-full">
+      <div class="modal-handle"></div>
+      <div id="camera-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="pages/data.js"></script>
+  <script src="pages/i18n.js"></script>
+  <script src="pages/home.js"></script>
+  <script src="pages/plants.js"></script>
+  <script src="pages/tasks.js"></script>
+  <script src="pages/camera.js"></script>
+  <script src="pages/profile.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
